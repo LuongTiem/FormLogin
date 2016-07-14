@@ -267,7 +267,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         var info = notification.userInfo!
         let keyboardFrame = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         
-         var height = keyboardFrame.size.height
+         let height = keyboardFrame.size.height
         
         
         print("chieu cao frame keyboard \(height)")
