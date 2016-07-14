@@ -21,6 +21,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var btnShow: UIButton!
     var User = ["luongtiem": "123","tiem":"tiem"]
     var checkEmpty = true
+    
+    var heightKeyboard : CGFloat = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         txtUser.placeholder = "Enter User .... "
@@ -35,20 +37,23 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.KeyboardWillHidden), name:UIKeyboardWillHideNotification, object: nil);
         
+       
     
     }
-    override func viewWillLayoutSubviews() {
-        
-        
-       
+    override func viewDidLayoutSubviews() {
+//        if(heightKeyboard - ToadoPoint() > 0){
+//            
+//        }else{
+//            contraintTopChildren.constant = 0 - ToadoPoint() - heightKeyboard
+//        }
     }
+  
     
     func ToadoPoint() -> CGFloat{
         
-         let maxY = self.view.frame.maxY
         let  view2_Y = self.viewChildren.frame.maxY
-        print(maxY - view2_Y)
-        return  maxY - view2_Y
+        print(view2_Y)
+        return  view2_Y
     }
   
     func showButton(){
@@ -156,7 +161,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
             txtPassWord.leftViewMode = UITextFieldViewMode.Always
            
         }
-    
         
         return false
     }
@@ -170,10 +174,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
             showButton()
             
         }
-
-        
-        
-     
         self.updateFocusIfNeeded()
         
         return true
@@ -208,7 +208,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         if(getPass != "" && getUser != ""){
              //-- add dictionary
             User[getUser!] = getPass
-            
+            ShowAlertView()
         }else{
             
             print("2 truong k dc de trong")
@@ -235,8 +235,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         if let UserTonTai = User[txtUser.text!] {
             
-
-            
                 User.removeValueForKey(UserTonTai)
                print("xoa thanh cong")
 
@@ -244,42 +242,43 @@ class ViewController: UIViewController,UITextFieldDelegate {
         }else{
              print("Tai khoan k ton tai  ")
         }
-        ShowAlertView()
-        showButton()
+    
+        
     }
     
     
     func ShowAlertView(){
-        
-        let alertview = UIAlertController(title: "Title", message: "Message", preferredStyle: UIAlertControllerStyle.Alert)
+      
+        let message =  "Save user :  " + txtUser.text! + " OK !"
+        let alertview = UIAlertController(title: "Save successful", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alertview.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
         self.presentViewController(alertview, animated: true, completion: nil)
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-       
-    }
     
+ 
     
+    //-- Keyboard Notification
  
     func KeyboardWillShow (notification : NSNotification){
         
         var info = notification.userInfo!
         let keyboardFrame = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         
-         let height = keyboardFrame.size.height
+         heightKeyboard = keyboardFrame.size.height
         
         
-        print("chieu cao frame keyboard \(height)")
+        print("chieu cao frame keyboard \(heightKeyboard)")
     }
     
-
+    
     
     
     func KeyboardWillHidden(){
         
         
     }
+    
+  
     
 }
 
