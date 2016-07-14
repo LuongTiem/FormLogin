@@ -37,7 +37,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.KeyboardWillHidden), name:UIKeyboardWillHideNotification, object: nil);
         
-       
+      // contraintTopChildren.constant = -100
     
     }
     override func viewDidLayoutSubviews() {

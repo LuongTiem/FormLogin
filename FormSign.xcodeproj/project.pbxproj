@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16BF32A61D37896D00CD7FDF /* FormSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BF32A51D37896D00CD7FDF /* FormSignIn.swift */; };
 		16C8A0071D35DE6B00933E37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C8A0061D35DE6B00933E37 /* AppDelegate.swift */; };
 		16C8A0091D35DE6B00933E37 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C8A0081D35DE6B00933E37 /* ViewController.swift */; };
 		16C8A00C1D35DE6B00933E37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16C8A00A1D35DE6B00933E37 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16BF32A51D37896D00CD7FDF /* FormSignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSignIn.swift; sourceTree = "<group>"; };
 		16C8A0031D35DE6B00933E37 /* FormSign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FormSign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C8A0061D35DE6B00933E37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		16C8A0081D35DE6B00933E37 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				16C8A0061D35DE6B00933E37 /* AppDelegate.swift */,
 				16C8A0081D35DE6B00933E37 /* ViewController.swift */,
+				16BF32A51D37896D00CD7FDF /* FormSignIn.swift */,
 				16C8A00A1D35DE6B00933E37 /* Main.storyboard */,
 				16C8A00D1D35DE6B00933E37 /* Assets.xcassets */,
 				16C8A00F1D35DE6B00933E37 /* LaunchScreen.storyboard */,
@@ -136,6 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16BF32A61D37896D00CD7FDF /* FormSignIn.swift in Sources */,
 				16C8A0091D35DE6B00933E37 /* ViewController.swift in Sources */,
 				16C8A0071D35DE6B00933E37 /* AppDelegate.swift in Sources */,
 			);
@@ -289,6 +293,7 @@
 				16C8A0171D35DE6B00933E37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
