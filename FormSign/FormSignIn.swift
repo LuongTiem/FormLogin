@@ -15,6 +15,7 @@ class FormSignIn: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var _srollview: UIScrollView!
     @IBOutlet weak var txtEmail: UITextField!
     
+    @IBOutlet weak var btnAction: UIButton!
     @IBOutlet weak var txtPassword: UITextField!
 
     @IBOutlet weak var Line_Email: UIView!
@@ -27,12 +28,16 @@ class FormSignIn: UIViewController,UITextFieldDelegate {
         
         self.txtPassword.delegate = self
         self.txtEmail.delegate = self
-    
+        
+        btnAction.backgroundColor = UIColor.clearColor()
+        btnAction.layer.borderColor = UIColor.whiteColor().CGColor
+        btnAction.layer.borderWidth = 1
+        btnAction.enabled = false
         AddImageInTextFild()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ShowKeyboard), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ShowHiddenKeyboard), name: UIKeyboardWillShowNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HiddenKeyboard), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ShowHiddenKeyboard), name: UIKeyboardWillHideNotification, object: nil)
       
     }
     
@@ -105,46 +110,78 @@ class FormSignIn: UIViewController,UITextFieldDelegate {
             
         }
         if (txtPassword == textField) {
-            self.view.endEditing(true)
+           txtPassword.resignFirstResponder()
+          
         }
         return true
     }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    
-        self.view.endEditing(true)
+  
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+         textField.addTarget(self, action: #selector(FormSignIn.checkKiTu), forControlEvents: UIControlEvents.EditingChanged)
+        return true
     }
-
     
+    func checkKiTu(){
+        
+        if(txtPassword.text != "" && txtEmail.text != ""){
+            btnAction.enabled = true
+            btnAction.backgroundColor = UIColor.redColor()
+        }
+    }
     //-- Show and hidden keyboard 
     
     
     
-    func ShowHiddenKeyboard(notification : NSNotification,show : Bool){
+    func ShowHiddenKeyboard(notification : NSNotification){
         
         if let userInfo  = notification.userInfo{
             
             let keyboardFrame = userInfo[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue()
-        //    let isShowing = notification.name == UIKeyboardDidShowNotification
-            let changeInHeight = (keyboardFrame!.height + 40) * (show ? 1 : 1 )
-            _srollview.contentInset.bottom = changeInHeight
-            _srollview.scrollIndicatorInsets.bottom = changeInHeight
+            let changeInHeight = keyboardFrame!.height + 40
+            let isKeyboardShowing = notification.name == UIKeyboardWillShowNotification
             
-            UIView.animateWithDuration(0.25, animations: {
+            if isKeyboardShowing{
+                _srollview.contentInset.bottom = changeInHeight
+                _srollview.scrollIndicatorInsets.bottom = changeInHeight
+            }else{
+                _srollview.contentInset.bottom = 0
+                _srollview.scrollIndicatorInsets.bottom = 0
+            }
+            
+            
+            UIView.animateWithDuration(0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.view.updateFocusIfNeeded()
-                }, completion: { (true) in
-                   
+                }, completion: { (completed) in
+                    //==
+                    if isKeyboardShowing{
+                        
+                    }
             })
+           
         }
         
     }
     
-    func ShowKeyboard(notification :NSNotification) {
-        ShowHiddenKeyboard(notification, show: true)
-    }
-    func HiddenKeyboard(notification : NSNotification){
+//    func ShowKeyboard(notification :NSNotification) {
+//        ShowHiddenKeyboard(notification, show: true)
+//    }
+//    func HiddenKeyboard(notification : NSNotification){
+//        
+//        ShowHiddenKeyboard(notification, show: false)
+//    }
+    
+    
+    @IBAction func Btn_Action(sender: AnyObject) {
         
-        ShowHiddenKeyboard(notification, show: false)
+        print("Click")
     }
+    
+    
+    func ClickButtonAction(){
+        
+    }
+   
+    
     
 }

@@ -35,18 +35,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.KeyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.KeyboardWillHidden), name:UIKeyboardWillHideNotification, object: nil);
+      //  NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.KeyboardWillHidden), name:UIKeyboardWillHideNotification, object: nil);
         
-      // contraintTopChildren.constant = -100
+    
     
     }
-    override func viewDidLayoutSubviews() {
-//        if(heightKeyboard - ToadoPoint() > 0){
-//            
-//        }else{
-//            contraintTopChildren.constant = 0 - ToadoPoint() - heightKeyboard
-//        }
-    }
+
   
     
     func ToadoPoint() -> CGFloat{
@@ -267,13 +261,23 @@ class ViewController: UIViewController,UITextFieldDelegate {
          heightKeyboard = keyboardFrame.size.height
         
         
-        print("chieu cao frame keyboard \(heightKeyboard)")
+        
     }
     
     
     
     
-    func KeyboardWillHidden(){
+    func checkToaDo (show : Bool){
+        
+        var rect = self.view.frame
+        if(show){
+            rect.origin.y -= 40
+            rect.size.height += 40
+        }else{
+            rect.origin.y += 40
+            rect.size.height -= 40
+        }
+        self.view.frame = rect
         
         
     }
