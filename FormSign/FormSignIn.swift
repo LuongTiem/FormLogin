@@ -22,6 +22,8 @@ class FormSignIn: UIViewController,UITextFieldDelegate {
   
     @IBOutlet weak var Line_Password: UIView!
     
+    var USER:Dictionary = ["luongtiem": "123","trunghop" : "456", "kienngo" : "asdf"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +40,34 @@ class FormSignIn: UIViewController,UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ShowHiddenKeyboard), name: UIKeyboardWillShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ShowHiddenKeyboard), name: UIKeyboardWillHideNotification, object: nil)
+        
+       
+       TapGuestRecognizer()
       
     }
     
+    
+    //-- Tap
+    func TapGuestRecognizer(){
+        
+        let  tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapScreen))
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    func tapScreen(){
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    
 
-
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+         self.navigationController?.navigationBarHidden = true
+    }
+    
+    
     
     func AddImageInTextFild(){
         
@@ -111,6 +136,7 @@ class FormSignIn: UIViewController,UITextFieldDelegate {
         }
         if (txtPassword == textField) {
            txtPassword.resignFirstResponder()
+            btnOK()
           
         }
         return true
@@ -163,22 +189,88 @@ class FormSignIn: UIViewController,UITextFieldDelegate {
         
     }
     
-//    func ShowKeyboard(notification :NSNotification) {
-//        ShowHiddenKeyboard(notification, show: true)
-//    }
-//    func HiddenKeyboard(notification : NSNotification){
-//        
-//        ShowHiddenKeyboard(notification, show: false)
-//    }
+
     
     
     @IBAction func Btn_Action(sender: AnyObject) {
+     
+        btnOK()
+       
+    
+    }
+    
+    func btnOK(){
+        //--check 
         
-        print("Click")
+        
+        if let userTonTai = USER[txtEmail.text!]{
+            
+            if userTonTai == txtPassword.text {
+                
+                let detailVC = self.storyboard?.instantiateViewControllerWithIdentifier("DetailVC")
+                self.navigationController?.pushViewController(detailVC!, animated: true)
+                
+            }else{
+                
+                AlertViewShow("", message: "Mat Khau Sai", bool: true)
+            }
+            
+        }else{
+            
+         AlertViewShow("Thong Bao", message: "Tai Khoan Khong Ton Tai", bool: true)
+        }
+        
+       
     }
     
     
-    func ClickButtonAction(){
+    func AlertViewShow(title : String, message : String, bool : Bool){
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
+        let actionCancel =  UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let actionOk = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        actionCancel.setValue(UIColor.redColor(), forKey: "titleTextColor")
+        
+      
+        
+        //--
+        
+        //--
+        if(bool){
+            
+            alertController.addAction(actionCancel)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+        }else{
+            
+            
+        let alertView = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+            
+         alertView.addTextFieldWithConfigurationHandler({ (textEmail) in
+            
+         })
+            
+         alertView.addTextFieldWithConfigurationHandler({ (textPass) in
+           
+         })
+            alertView.addAction(actionCancel)
+            alertView.addAction(actionOk)
+           
+          self.presentViewController(alertView, animated: true, completion: nil)
+         
+        }
+        
+        
+        
+        
+    }
+    
+ 
+ 
+    @IBAction func ActionDangKi(sender: UIButton) {
+        
+        
+        AlertViewShow("Form Dang Ki ", message: "nhap email vs pass ", bool: false)
         
     }
    
